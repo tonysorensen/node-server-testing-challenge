@@ -43,4 +43,19 @@ describe("Blackhole model", () => {
       });
     });
   });
+
+  describe("insert()", () => {
+    it("creates a black hole!", async () => {
+      const blackhole = await Blackhole.insert({ name: "Centaurus A" });
+      const blackholes = await Blackhole.getAll();
+      expect(blackhole).toMatchObject({ name: "Centaurus A" });
+      expect(blackholes).toHaveLength(1);
+    });
+    it("returns null for name but still creates an object when an empty object is inserted to the table", async () => {
+      const blackhole = await Blackhole.insert({});
+      const blackholes = await Blackhole.getAll();
+      expect(blackhole).toMatchObject({ name: null });
+      expect(blackholes).toHaveLength(1);
+    });
+  });
 });
