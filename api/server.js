@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const blackholeRouter = require("./blackhole_router");
+const blackholeRouter = require("./blackholes/blackhole_router");
 const server = express();
 
 server.use(express.json());
