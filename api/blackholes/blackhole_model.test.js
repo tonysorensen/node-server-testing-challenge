@@ -58,4 +58,37 @@ describe("Blackhole model", () => {
       expect(blackholes).toHaveLength(1);
     });
   });
+
+  describe('remove()', () => {
+      it('removes a black hole', async () => {
+         
+          await Blackhole.insert({ name: "Messier 87" });
+          await Blackhole.insert({ name: "Sagittarius A" });
+          await Blackhole.insert({ name: "NGC 1277" });
+          const {id: newBlackHoleId}=await Blackhole.insert({name:"CG 483"})
+          const blackholes = await Blackhole.getAll();
+          expect(blackholes).toHaveLength(4)
+          await Blackhole.remove(newBlackHoleId)
+          const deleted = await Blackhole.getAll()
+          expect(deleted).toHaveLength(3)
+          expect(await Blackhole.getById(newBlackHoleId)).toBeUndefined()
+        
+      });
+      it('no change to db if the id doesn`t match', async () => {
+        await Blackhole.insert({ name: "Messier 87" });
+        await Blackhole.insert({ name: "Sagittarius A" });
+        await Blackhole.insert({ name: "NGC 1277" });
+        const {id: newBlackHoleId}=await Blackhole.insert({name:"CG 483"})
+        const blackholes = await Blackhole.getAll();
+        expect(blackholes).toHaveLength(4)
+        await Blackhole.remove(5)
+        const noDelete = await Blackhole.getAll()
+        expect(noDelete).toHaveLength(4)
+        expect(await Blackhole.getById(newBlackHoleId)).toMatchObject({name:"CG 483"})
+      });
+      
+      
+      
+  });
+  
 });
