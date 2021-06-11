@@ -17,7 +17,7 @@ function getById(id) {
 
 async function insert(blackhole) {
   const [id] = await db("blackholes").insert(blackhole, ["id", "name"]);
-  return db("hobbits").where("id", id).first();
+  return db("blackholes").where("id", id).first();
 }
 
 async function update(id, changes) {
