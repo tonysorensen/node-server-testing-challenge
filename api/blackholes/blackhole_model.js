@@ -12,7 +12,7 @@ function getAll() {
   return db("blackholes");
 }
 function getById(id) {
-  return null;
+  return db("blackholes").where({id}).first();
 }
 
 async function insert(blackhole) {
@@ -25,5 +25,5 @@ async function update(id, changes) {
 }
 
 function remove(id) {
-  return null;
+  return db('blackholes').where({id}).del();
 }
